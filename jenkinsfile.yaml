@@ -9,7 +9,7 @@ pipeline {
 stages {
    stage('Checkout'){
       steps {
-         git 'https://github.com/spring-projects/spring-petclinic.git'
+         git 'https://github.com/numesh06/java-ci-cd'
       }
    }
         
@@ -64,7 +64,7 @@ stage('Deploy to Kubernetes') {
     steps {
         script {
             sh 'kubectl apply -f deployment.yaml'
-	   	}
+	   	        }
             }
         }
     }
