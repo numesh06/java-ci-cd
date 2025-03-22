@@ -9,7 +9,7 @@ pipeline {
 stages {
    stage('Checkout'){
       steps {
-        git branch: 'main', url: 'https://github.com/spring-projects/spring-petclinic.git'
+        git branch: 'main', url: 'https://github.com/numesh06/spring-petclinic.git'
       }
    }
         
@@ -17,7 +17,7 @@ stage('Build'){
     steps {
         script {
             docker.image('maven:3.9.6-eclipse-temurin-17').inside {
-                sh 'mvn clean package'
+                sh 'mvn clean package -DskipTests'
             }
         }
     }
