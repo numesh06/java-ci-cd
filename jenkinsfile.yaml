@@ -17,7 +17,7 @@ stage('Build'){
     steps {
         script {
             docker.image('mycustom/maven-docker').inside('--user root -v /var/run/docker.sock:/var/run/docker.sock') {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn clean package'
             }
         }
     }
