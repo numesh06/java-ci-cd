@@ -68,7 +68,7 @@ stage('Deploy to Kubernetes') {
         script {
             docker.image('bitnami/kubectl:latest').inside('--entrypoint="" -v /root/.kube:/root/.kube --network host') {
             // sh 'export KUBECONFIG=/var/jenkins_home/.kube/config'
-            withEnv(["KUBECONFIG=/root/.kube/config"]) {
+            withEnv(["KUBECONFIG=/var/jenkins_home/.kube/config"]) {
                     sh 'kubectl apply --validate=false -f k8s/deployment.yaml'
                     sh 'kubectl apply --validate=false -f k8s/service.yaml'
                 }
