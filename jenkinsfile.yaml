@@ -9,7 +9,7 @@ pipeline {
 stages {
    stage('Checkout'){
       steps {
-         git checkout 'https://github.com/numesh06/java-ci-cd'
+        git branch: 'main', url: 'https://github.com/numesh06/java-ci-cd.git'
       }
    }
         
@@ -46,7 +46,7 @@ stage('Static Code Analysis') {
 stage('Build Docker Image') {
     steps {
         script {
-            sh 'docker build -t ${DOCKER_IMAGE}.'
+            sh 'docker build -t ${DOCKER_IMAGE} .'
         }
     }
 }
