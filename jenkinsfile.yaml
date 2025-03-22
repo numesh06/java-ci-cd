@@ -65,9 +65,12 @@ stage('Push to Docker Hub') {
 stage('Deploy to Kubernetes') {
     steps {
         script {
-            sh 'kubectl apply -f deployment.yaml'
+            docker.image('bitnami/kubectl:latest').inside('--entrypoint=""') {
+            sh 'kubectl apply -f k8s_deployment.yaml'
+            sh 'kubectl apply -f k8s_service.yaml'
 	   	        }
             }
         }
     }
+}
 }
