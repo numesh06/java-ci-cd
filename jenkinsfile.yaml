@@ -9,14 +9,14 @@ pipeline {
 stages {
    stage('Checkout'){
       steps {
-        git branch: 'main', url: 'https://github.com/numesh06/java-ci-cd.git'
+        git 'https://github.com/spring-projects/spring-petclinic.git'
       }
    }
         
 stage('Build'){
     steps {
         script {
-            docker.image('maven:3.9.6-eclipse-temurin-17').inside {
+            docker.image('openjdk:17-jdk').inside {
                 sh 'mvn clean package'
             }
         }
@@ -26,7 +26,7 @@ stage('Build'){
 stage('Test') {
     steps {
         script {
-            docker.image('maven:3.9.6-eclipse-temurin-11').inside {
+            docker.image('openjdk:11-jdk').inside {
                 sh 'mvn test'
             }
         }
@@ -36,7 +36,7 @@ stage('Test') {
 stage('Static Code Analysis') {
     steps {
         script {
-            docker.image('maven:3.9.6-eclipse-temurin-8').inside {
+            docker.image('openjdk:8-jdk').inside {
                 sh 'mvn sonar:sonar -Dsonar.host.url=${SONARQUBE_SERVER}'
             }
         }
