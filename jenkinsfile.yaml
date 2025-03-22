@@ -35,9 +35,11 @@ stage('Test') {
 
 stage('Static Code Analysis') {
     steps {
+        withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
         script {
             docker.image('maven:3.9.6-eclipse-temurin-17').inside {
-                sh 'mvn sonar:sonar -Dsonar.host.url=${SONARQUBE_SERVER}'
+                sh 'mvn sonar:sonar -Dsonar.host.url=${SONARQUBE_SERVER} -Dsonar.login=$SONAR_TOKEN'
+            }
             }
         }
     }
