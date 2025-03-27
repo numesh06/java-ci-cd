@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    SONARQUBE_SERVER = 'http://sonar:9000'
+    SONARQUBE_SERVER = 'http://host.docker.internal:9001'
     DOCKER_IMAGE = 'nanumesh/java-app:latest'
     KUBECONFIG = '/var/jenkins_home/.kube/config'
 }
