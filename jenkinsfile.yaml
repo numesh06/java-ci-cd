@@ -17,7 +17,7 @@ stages {
 stage('Build'){
     steps {
         script {
-            docker.image('maven:3.9.6-eclipse-temurin-17').inside('--volumes-from java17') {
+            docker.image('maven:3.9.6-eclipse-temurin-17').inside {
                 sh 'mvn clean package'
             }
         }
@@ -27,7 +27,7 @@ stage('Build'){
 stage('Test') {
     steps {
         script {
-            docker.image('maven:3.9.6-eclipse-temurin-17').inside('--volumes-from java11') {
+            docker.image('maven:3.9.6-eclipse-temurin-17').inside {
                 sh 'mvn test'
             }
         }
@@ -38,7 +38,7 @@ stage('Static Code Analysis') {
     steps {
         withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
         script {
-            docker.image('maven:3.9.6-eclipse-temurin-17').inside('--volumes-from java8') {
+            docker.image('maven:3.9.6-eclipse-temurin-17').inside {
                 sh 'mvn sonar:sonar -Dsonar.host.url=${SONARQUBE_SERVER} -Dsonar.login=$SONAR_TOKEN'
             }
             }
