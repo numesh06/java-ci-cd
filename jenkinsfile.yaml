@@ -36,14 +36,9 @@ stages {
 
 stage('Static Code Analysis') {
     steps {
-        sh 'curl http://host.docker.internal:9001'
-        sh 'echo curldone'
         withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
         script {
             docker.image('maven:3.9.6-eclipse-temurin-17').inside('--network ci_network') {
-                sh 'curl http://host.docker.internal:9001'
-                sh 'echo curldone'
-
                 sh 'mvn sonar:sonar -Dsonar.host.url=${SONARQUBE_SERVER} -Dsonar.login=$SONAR_TOKEN'
             }
             }
