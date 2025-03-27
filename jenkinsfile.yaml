@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    SONARQUBE_SERVER = 'https://host.docker.internal:9001'
+    SONARQUBE_SERVER = 'http://host.docker.internal:9001'
     DOCKER_IMAGE = 'nanumesh/java-app:latest'
     KUBECONFIG = '/var/jenkins_home/.kube/config'
 }
@@ -36,6 +36,8 @@ stages {
 
 stage('Static Code Analysis') {
     steps {
+        sh 'curl http://host.docker.internal:9001'
+        sh 'echo curldone'
         withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
         script {
             docker.image('maven:3.9.6-eclipse-temurin-17').inside('--network ci_network') {
